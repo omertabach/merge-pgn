@@ -34,12 +34,16 @@ def main():
         newvars = []
         done = True
         for vnode, nodes in variations:
-            newmoves = {}
+            newmoves = {}  # Maps move to its index in newvars.
             for node in nodes:
                 if node.move is None:
                     continue
                 elif node.move not in list(newmoves):
                     nvnode = vnode.add_variation(node.move)
+
+                    # Grab the first comment to appear.
+                    if not nvnode.comment:
+                        nvnode.comment = node.comment
                     if len(node.variations) > 0:
                         done = False
                     newvars.append((nvnode, node.variations))
